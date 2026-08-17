@@ -171,7 +171,7 @@ footer a{color:var(--gold);text-decoration:none}
   <section id="request">
     <h2>Request an appointment</h2>
     <p class="sublede">Nick confirms every job by hand, usually the same day. Routes get built around drive time and weather, so there is no self-booking calendar.</p>
-    <form id="rf" action="__FORM_ENDPOINT__" method="POST">
+    <form id="rf" action="https://formspree.io/f/mdenwrwd" method="POST">
       <input type="hidden" name="_subject" value="New request from palmcityhandwash.com">
       <label><span>Name</span><input type="text" name="name" required autocomplete="name"></label>
       <div class="two">
@@ -242,12 +242,6 @@ document.querySelectorAll("[data-b]").forEach(function(b){b.addEventListener("cl
   b.classList.add("on"); B=+b.getAttribute("data-b"); prices();});});
 document.getElementById("ft").addEventListener("input",boat);
 prices(); boat();
-document.getElementById("rf").addEventListener("submit",function(e){
-  if(this.getAttribute("action").indexOf("__FORM")===0){
-    e.preventDefault();
-    alert("Form endpoint is not connected yet. See README step 4.");
-  }
-});
 </script>
 </body>
 </html>
