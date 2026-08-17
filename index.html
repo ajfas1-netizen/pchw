@@ -31,23 +31,41 @@
 "makesOffer":[
 {"@type":"Offer","itemOffered":{"@type":"Service","name":"Express Hand Wash"},"price":"75","priceCurrency":"USD"},
 {"@type":"Offer","itemOffered":{"@type":"Service","name":"Ceramic Coating"},"price":"1095","priceCurrency":"USD"},
-{"@type":"Offer","itemOffered":{"@type":"Service","name":"Paint Protection Film"},"price":"1095","priceCurrency":"USD"}]}
+{"@type":"Offer","itemOffered":{"@type":"Service","name":"Paint Protection Film"},"price":"1095","priceCurrency":"USD"},
+{"@type":"Offer","itemOffered":{"@type":"Service","name":"Marine Detailing"},"price":"165","priceCurrency":"USD"},
+{"@type":"Offer","itemOffered":{"@type":"Service","name":"RV Detailing"},"price":"350","priceCurrency":"USD"}]}
 </script>
 <style>
 :root{--ink:#08182E;--navy:#0E2745;--navy2:#12314F;--gold:#C5A253;--gold-lt:#EBD9A5;--gold-dk:#8E6F2E;
- --bone:#F4F1E8;--dim:#8FA0B2;--hair:rgba(197,162,83,.34);--r:12px;--rs:8px}
+ --bone:#F4F1E8;--dim:#8FA0B2;--hair:rgba(197,162,83,.34);--r:12px;--rs:8px;--gap:12px}
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;scroll-padding-top:74px}
 body{margin:0;background:var(--ink);color:var(--bone);font-family:Inter,system-ui,sans-serif;font-size:16px;line-height:1.62;-webkit-font-smoothing:antialiased}
+body.hasbar{padding-bottom:86px}
+body.lock{overflow:hidden}
 img{max-width:100%;height:auto;display:block}
 .w{max-width:1060px;margin:0 auto;padding:0 20px}
 a{color:var(--gold)}
-/* header */
-header.top{position:sticky;top:0;z-index:50;background:rgba(8,24,46,.94);backdrop-filter:blur(8px);border-bottom:1px solid rgba(197,162,83,.2)}
-.tbar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px 20px;max-width:1060px;margin:0 auto}
+/* header + hamburger */
+header.top{position:sticky;top:0;z-index:60;background:rgba(8,24,46,.95);backdrop-filter:blur(8px);border-bottom:1px solid rgba(197,162,83,.2)}
+.tbar{display:flex;align-items:center;gap:12px;padding:10px 20px;max-width:1060px;margin:0 auto}
 .tbar .mk{height:30px;width:auto}
+.tbar .sp{flex:1}
 .callb{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:var(--ink);text-decoration:none;
  border-radius:999px;padding:9px 16px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap}
+.mbtn{display:flex;flex-direction:column;justify-content:center;background:transparent;border:1px solid var(--hair);
+ border-radius:var(--rs);padding:9px 10px;cursor:pointer;flex:0 0 auto}
+.mbtn i{display:block;width:19px;height:1.5px;background:var(--gold);margin:2.5px 0;transition:transform .2s,opacity .2s}
+.mbtn.on i:nth-child(1){transform:translateY(4px) rotate(45deg)}
+.mbtn.on i:nth-child(2){opacity:0}
+.mbtn.on i:nth-child(3){transform:translateY(-4px) rotate(-45deg)}
+.mnav{max-height:0;overflow:hidden;transition:max-height .25s ease;background:rgba(8,24,46,.99)}
+.mnav.on{max-height:380px;border-top:1px solid rgba(197,162,83,.18)}
+.mnav .in{max-width:1060px;margin:0 auto;padding:4px 20px 14px}
+.mnav a{display:flex;align-items:center;gap:10px;padding:13px 2px;border-bottom:1px solid rgba(255,255,255,.07);
+ color:var(--bone);text-decoration:none;font-family:'Barlow Condensed',sans-serif;font-size:14.5px;letter-spacing:.16em;text-transform:uppercase;cursor:pointer}
+.mnav a:last-child{border-bottom:0}
+.mnav a b{color:var(--gold);font-weight:600;font-size:12px;width:16px}
 /* hero */
 .hero{padding:38px 0 30px;text-align:center}
 .hero img.logo{width:min(330px,78vw);margin:0 auto 20px}
@@ -70,56 +88,144 @@ h1 span{color:var(--gold)}
 section{padding:44px 0;border-top:1px solid rgba(197,162,83,.16)}
 h2{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(26px,4.6vw,34px);margin:0 0 6px}
 .sublede{color:var(--dim);margin:0 0 24px;font-size:15px}
-/* vehicle cards */
-.vc{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:13px}
-.v{border:1px solid var(--hair);border-radius:var(--r);padding:18px;text-align:center;
- background:linear-gradient(165deg,#12314F,#0B1E38 45%,#08182E);text-decoration:none;color:inherit;display:block}
-.v:hover{border-color:var(--gold)}
-.v .nm{font-weight:700;font-size:21px;text-transform:uppercase;letter-spacing:.02em}
-.v .rule{width:60px;height:1px;background:var(--gold);opacity:.6;margin:10px auto}
-.v .fr{font-family:'Barlow Condensed',sans-serif;font-size:12.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--gold)}
-/* price table */
-.seg{display:inline-flex;background:#0A1B31;border:1px solid var(--hair);border-radius:var(--rs);padding:3px;margin-bottom:18px}
-.seg button{background:transparent;border:0;color:var(--dim);padding:9px 16px;font-family:'Barlow Condensed',sans-serif;
- font-size:12px;letter-spacing:.15em;text-transform:uppercase;font-weight:600;cursor:pointer;border-radius:6px}
+.dhead{display:flex;justify-content:center;margin:4px 0 0}
+.dhead span{font-family:'Barlow Condensed',sans-serif;font-size:11.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.dbolt{display:flex;align-items:center;gap:10px;margin:8px 0 16px}
+.dbolt .ln{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(197,162,83,.6))}
+.dbolt .ln.r{background:linear-gradient(90deg,rgba(197,162,83,.6),transparent)}
+.dbolt svg{width:8px;height:19px;flex:0 0 auto;display:block;opacity:.85}
+/* vehicle tiles with line art */
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap)}
+@media(max-width:640px){.tiles{grid-template-columns:1fr}}
+.vcard{grid-column:span 1;position:relative;display:flex;flex-direction:column;align-items:center;width:100%;
+ text-align:center;font:inherit;color:inherit;cursor:pointer;
+ background:linear-gradient(165deg,#12314F 0%,#0B1E38 42%,#08182E 100%);
+ border:1px solid var(--hair);border-radius:var(--r);padding:14px 12px 16px;overflow:hidden;transition:border-color .18s,transform .18s}
+.vcard.wide{grid-column:span 2}
+@media(max-width:640px){.vcard.wide{grid-column:span 1}}
+.vcard:hover{border-color:var(--gold);transform:translateY(-2px)}
+.vcard.has{border-color:var(--gold)}
+.vcard .art{width:100%;max-width:196px;opacity:.94;margin-bottom:2px}
+.vcard.wide .art{max-width:250px}
+.vcard .nm{font-family:Inter,sans-serif;font-weight:700;font-size:21px;line-height:1.02;text-transform:uppercase;color:#F7F5EF}
+.vcard .rule{width:64%;height:1px;background:rgba(197,162,83,.55);margin:9px 0 8px}
+.vcard .fr{font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:.14em;color:var(--gold);text-transform:uppercase;line-height:1.5}
+.vcard .tapin{font-family:'Barlow Condensed',sans-serif;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-dk);margin-top:7px}
+/* overlay */
+.ov{position:fixed;inset:0;z-index:90;background:rgba(4,12,24,.88);backdrop-filter:blur(5px);display:none;padding:16px}
+.ov.on{display:flex}
+.ovbox{background:var(--ink);border:1px solid var(--hair);border-radius:var(--r);width:100%;max-width:840px;margin:auto;
+ max-height:min(94vh,900px);display:flex;flex-direction:column;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+@media(max-width:640px){.ov{padding:0}.ovbox{max-height:100%;height:100%;border-radius:0;border:0}}
+.ovtop{display:flex;align-items:center;gap:9px;padding:13px 16px;border-bottom:1px solid rgba(197,162,83,.22);flex:0 0 auto}
+.ovttl{flex:1;min-width:0;font-family:'Barlow Condensed',sans-serif;font-size:17px;letter-spacing:.14em;text-transform:uppercase;color:#fff;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ovbtn{background:transparent;border:1px solid var(--hair);border-radius:var(--rs);color:var(--gold);cursor:pointer;
+ font-family:'Barlow Condensed',sans-serif;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;padding:8px 11px;white-space:nowrap;flex:0 0 auto}
+.ovbtn:hover{border-color:var(--gold)}
+.ovbtn.hide{display:none}
+.ovx{background:transparent;border:1px solid var(--hair);border-radius:var(--rs);color:var(--gold);cursor:pointer;
+ font-size:18px;line-height:1;padding:7px 12px;flex:0 0 auto}
+.ovx:hover{border-color:var(--gold)}
+.ovbody{overflow-y:auto;-webkit-overflow-scrolling:touch;padding:6px 16px 20px;flex:1 1 auto}
+.ovbody h3{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(23px,4.4vw,30px);margin:14px 0 6px}
+.ovfoot{display:flex;align-items:center;gap:14px;padding:12px 16px;border-top:1px solid rgba(197,162,83,.28);flex:0 0 auto;background:rgba(8,24,46,.98)}
+.ovfoot .lbl{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+.ovfoot .tot{font-family:'Barlow Condensed',sans-serif;font-size:26px;color:var(--gold-lt);line-height:1}
+.ovfoot .sp{flex:1}
+.ovfoot .cta{padding:13px 20px}
+.ovfoot.hide{display:none}
+/* steps */
+.step{margin-top:24px}
+.step.hide{display:none}
+.slab{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.slab .num{width:23px;height:23px;border-radius:50%;border:1px solid var(--hair);color:var(--gold);flex:0 0 auto;
+ font-family:'Barlow Condensed',sans-serif;font-size:12px;display:flex;align-items:center;justify-content:center}
+.slab .tx{font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);font-weight:600}
+.slab .hint{font-family:Inter,sans-serif;font-size:12.5px;letter-spacing:0;text-transform:none;color:var(--dim);font-weight:400}
+/* segmented toggles */
+.seg{display:flex;background:#0A1B31;border:1px solid var(--hair);border-radius:var(--rs);padding:3px;margin:0;flex-wrap:wrap}
+.seg button{flex:1;min-width:110px;background:transparent;border:0;color:var(--dim);padding:11px 6px;
+ font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;cursor:pointer;border-radius:6px}
 .seg button.on{background:var(--gold);color:var(--ink)}
-.pr{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.08)}
-.pr .l b{display:block;font-size:15px;font-weight:500}
-.pr .l small{display:block;color:var(--dim);font-size:12.5px;margin-top:3px;line-height:1.45}
-.pr .p{font-family:'Barlow Condensed',sans-serif;font-size:20px;color:var(--gold-lt);white-space:nowrap}
-.tag{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:.16em;text-transform:uppercase;
- background:rgba(197,162,83,.18);color:var(--gold-lt);padding:2px 7px;border-radius:4px;margin-left:7px;vertical-align:2px}
-/* calculator */
-.calc{border:1px solid var(--hair);border-radius:var(--r);padding:20px;background:#0A1B31;margin-top:8px}
-.calc .top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}
-.calc .val{font-family:'Barlow Condensed',sans-serif;font-size:30px;color:var(--gold-lt)}
+/* selectable rows */
+.row{display:flex;gap:12px;align-items:flex-start;padding:15px 0;border-bottom:1px solid rgba(255,255,255,.08);cursor:pointer}
+.row:hover .rname{color:var(--gold-lt)}
+.row .body{flex:1;min-width:0}
+.rname{font-size:15.5px;color:#fff;font-weight:500;line-height:1.28}
+.rdesc{font-size:13px;color:var(--dim);margin-top:4px;line-height:1.5}
+.rmeta{font-size:10.5px;color:var(--gold-dk);margin-top:6px;font-family:'Barlow Condensed',sans-serif;letter-spacing:.13em;text-transform:uppercase}
+.rprice{font-family:'Barlow Condensed',sans-serif;font-size:19px;color:var(--gold-lt);white-space:nowrap;text-align:right;flex:0 0 auto}
+.rprice small{display:block;font-size:10px;color:#6F8090;letter-spacing:.1em;text-transform:uppercase}
+.chk{width:21px;height:21px;border-radius:6px;border:1.5px solid var(--hair);flex:0 0 auto;margin-top:2px;
+ display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--ink)}
+.row.sel .chk{background:var(--gold);border-color:var(--gold)}
+.flag{display:inline-block;font-size:9.5px;background:rgba(197,162,83,.18);color:var(--gold-lt);padding:2px 7px;
+ border-radius:4px;font-family:'Barlow Condensed',sans-serif;letter-spacing:.14em;text-transform:uppercase;margin-left:7px;vertical-align:2px}
+/* length slider */
+.lenbox{background:#0A1B31;border:1px solid var(--hair);border-radius:var(--r);padding:16px}
+.lenbox .top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
+.lenbox .val{font-family:'Barlow Condensed',sans-serif;font-size:28px;color:var(--gold-lt)}
 input[type=range]{width:100%;accent-color:var(--gold)}
-.math{border-left:2px solid var(--gold);background:rgba(197,162,83,.07);border-radius:0 var(--rs) var(--rs) 0;padding:14px 16px;margin-top:16px;font-size:14px;color:var(--dim)}
-.math b{color:var(--gold-lt)}.math .big{display:block;color:var(--bone);font-family:'Barlow Condensed',sans-serif;font-size:18px;margin-top:7px}
+.math{border-left:2px solid var(--gold);background:rgba(197,162,83,.07);border-radius:0 var(--rs) var(--rs) 0;
+ padding:14px 16px;margin-top:18px;font-size:14px;color:var(--dim)}
+.math b{color:var(--gold-lt)}
+.math .big{display:block;color:var(--bone);font-family:'Barlow Condensed',sans-serif;font-size:18px;margin-top:7px}
+/* fixed running total bar */
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:70;background:rgba(8,24,46,.97);backdrop-filter:blur(8px);
+ border-top:1px solid rgba(197,162,83,.3);transform:translateY(110%);transition:transform .22s}
+.bar.on{transform:none}
+.bar .in{max-width:1060px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:14px}
+.bar .lbl{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+.bar .tot{font-family:'Barlow Condensed',sans-serif;font-size:26px;color:var(--gold-lt);line-height:1}
+.bar .sp{flex:1}
+.bar .cta{padding:13px 22px}
+/* maintenance plans */
+.planrow{border:1px solid var(--hair);border-radius:var(--r);padding:16px;margin-bottom:var(--gap);
+ background:linear-gradient(160deg,rgba(18,49,79,.6),transparent)}
+.planrow .t{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.planrow .nm{font-family:'Barlow Condensed',sans-serif;font-size:17px;letter-spacing:.11em;text-transform:uppercase;color:#fff;font-weight:600}
+.planrow .pr{font-family:'Barlow Condensed',sans-serif;font-size:20px;color:var(--gold-lt);white-space:nowrap}
+.planrow .pr small{font-size:10.5px;color:#6F8090}
+.planrow .d{font-size:13.5px;color:var(--dim);margin-top:6px}
 /* form */
-form{max-width:620px}
-label{display:block;margin-bottom:14px}
-label span{display:block;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+form{max-width:100%}
+label.f{display:block;margin-bottom:15px}
+label.f span{display:block;font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
 input[type=text],input[type=tel],input[type=email],select,textarea{width:100%;background:#0A1B31;border:1px solid var(--hair);
  border-radius:var(--rs);color:#fff;padding:12px 13px;font-family:Inter;font-size:15px}
-textarea{min-height:96px;resize:vertical}
+textarea{min-height:90px;resize:vertical}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:13px}
 @media(max-width:520px){.two{grid-template-columns:1fr}}
-.note{font-size:13px;color:var(--dim);margin:6px 0 18px;line-height:1.55}
+.note{font-size:13px;color:var(--dim);margin:6px 0 16px;line-height:1.55}
 .sms{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--hair);border-radius:var(--rs);padding:13px 17px;
  text-decoration:none;color:var(--gold);font-family:'Barlow Condensed',sans-serif;font-weight:600;letter-spacing:.14em;text-transform:uppercase;font-size:13.5px}
+.empty{color:var(--dim);font-size:14px;padding:14px 0}
+.estsum{background:#0A1B31;border:1px solid var(--hair);border-radius:var(--rs);padding:12px 14px;margin:0 0 16px;font-size:13.5px;color:var(--dim)}
+.estsum b{color:var(--gold-lt);display:block;font-family:'Barlow Condensed',sans-serif;letter-spacing:.14em;text-transform:uppercase;font-size:11px;margin-bottom:4px}
 footer{border-top:1px solid rgba(197,162,83,.2);padding:30px 0 44px;color:var(--dim);font-size:13.5px;text-align:center}
 footer .ph{font-size:26px;font-weight:700;color:var(--bone);letter-spacing:.02em;margin-bottom:6px}
 footer a{color:var(--gold);text-decoration:none}
-.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 </style>
 </head>
 <body>
-<header class="top"><div class="tbar">
-  <img class="mk" src="assets/logo-wordmark.png" alt="Striking Details">
-  <a class="callb" href="tel:+15612758846">Call (561) 275-8846</a>
-</div></header>
+<header class="top">
+  <div class="tbar">
+    <a href="#top"><img class="mk" src="assets/logo-wordmark.png" alt="Striking Details"></a>
+    <span class="sp"></span>
+    <a class="callb" href="tel:+15612758846">Call (561) 275-8846</a>
+    <button class="mbtn" id="mbtn" aria-label="Menu" aria-expanded="false" aria-controls="mnav"><i></i><i></i><i></i></button>
+  </div>
+  <div class="mnav" id="mnav"><div class="in">
+    <a href="#build"><b>01</b>Build your estimate</a>
+    <a data-open="estimate"><b>02</b>Your estimate</a>
+    <a data-open="plans"><b>03</b>Maintenance plans</a>
+    <a data-open="request"><b>04</b>Your time to shine</a>
+    <a href="sms:+15612758846?&amp;body=Hi%20Nick%2C%20here%20are%20photos%20for%20my%20quote%3A"><b>05</b>Text photos</a>
+    <a href="tel:+15612758846"><b>06</b>Call (561) 275-8846</a>
+  </div></div>
+</header>
 
+<div id="top"></div>
 <div class="w">
   <div class="hero">
     <img class="logo" src="assets/logo.png" alt="Striking Details - auto, marine and RV detailing in Palm City, Florida">
@@ -127,8 +233,8 @@ footer a{color:var(--gold);text-decoration:none}
     <h1>Protection that outlasts the <span>Florida</span> sun.</h1>
     <p class="lede">Certified ceramic coating, paint protection film and hand wash detailing for cars, boats and coaches across Martin County and the Treasure Coast.</p>
     <div class="ctas">
-      <a class="cta" href="#request">Request an appointment</a>
-      <a class="cta ghost" href="#prices">See real prices</a>
+      <a class="cta" href="#build">Build your estimate</a>
+      <button class="cta ghost" data-open="request">Your time to shine</button>
     </div>
   </div>
 
@@ -138,76 +244,30 @@ footer a{color:var(--gold);text-decoration:none}
     <div class="tbox"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="i3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#F0DDA8"/><stop offset="100%" stop-color="#B08D3F"/></linearGradient></defs><g fill="none" stroke="url(#i3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2,2.4 H14.6 L18.4,6.2 V21.6 H6.2 Z"/><path d="M14.4,2.5 V6.3 H18.3"/><path d="M9,11 H15.6 M9,14.4 H15.6 M9,17.8 H13.2"/></g></svg><div><b>CARFAX Reported</b><span>On your vehicle history</span></div></div>
     <div class="tbox"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="i4" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#F0DDA8"/><stop offset="100%" stop-color="#B08D3F"/></linearGradient></defs><g fill="none" stroke="url(#i4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7.6" r="4.1"/><path d="M4.6,21.4 C4.6,17.1 7.9,13.7 12,13.7 C16.1,13.7 19.4,17.1 19.4,21.4"/></g></svg><div><b>Owner Operated</b><span>Nick Fratz, every job</span></div></div>
   </div>
-
-  <section id="services">
-    <h2>What we detail</h2>
-    <p class="sublede">Cars price by body style. Boats and coaches price by the foot.</p>
-    <div class="vc">
-      <a class="v" href="#prices"><div class="nm">Car &amp; Truck</div><div class="rule"></div><div class="fr">Washes from $75 &middot; Coatings from $1,095</div></a>
-      <a class="v" href="#boat"><div class="nm">Boat</div><div class="rule"></div><div class="fr">From $7/ft &middot; Ceramic from $78/ft</div></a>
-      <a class="v" href="#rv"><div class="nm">RV &amp; Coach</div><div class="rule"></div><div class="fr">From $12/ft &middot; Ceramic from $88/ft</div></a>
-    </div>
-  </section>
-
-  <section id="prices">
-    <h2>What it costs</h2>
-    <p class="sublede">Published prices, because you should not have to call to find out. Final quote confirmed from your photos.</p>
-    <div class="seg" role="tablist">
-      <button class="on" data-b="0">Sedan</button><button data-b="1">SUV / Truck</button>
-    </div>
-    <div id="plist"></div>
-  </section>
-
-  <section id="boat">
-    <h2>Boat pricing, live</h2>
-    <p class="sublede">Set your length. Every price is per foot against a minimum.</p>
-    <div class="calc">
-      <div class="top"><span class="eyebrow">Length overall</span><span class="val" id="ftv">28 ft</span></div>
-      <input type="range" id="ft" min="16" max="60" value="28" aria-label="Boat length in feet">
-      <div id="blist" style="margin-top:14px"></div>
-      <div class="math" id="bmath"></div>
-    </div>
-  </section>
-
-  <section id="rv">
-    <h2>RV and coach pricing, live</h2>
-    <p class="sublede">Set your length. Every price is per foot against a minimum, and every number is a starting price confirmed after inspection.</p>
-    <div class="calc">
-      <div class="top"><span class="eyebrow">Length overall</span><span class="val" id="rftv">34 ft</span></div>
-      <input type="range" id="rft" min="20" max="45" value="34" aria-label="RV or coach length in feet">
-      <div id="rlist" style="margin-top:14px"></div>
-      <div class="eyebrow" style="margin-top:22px">Add-ons</div>
-      <div id="ralist" style="margin-top:6px"></div>
-    </div>
-  </section>
-
-  <section id="request">
-    <h2>Request an appointment</h2>
-    <p class="sublede">Nick confirms every job by hand, usually the same day. Routes get built around drive time and weather, so there is no self-booking calendar.</p>
-    <form id="rf" action="https://formspree.io/f/mdenwrwd" method="POST">
-      <input type="hidden" name="_subject" value="New request from palmcityhandwash.com">
-      <label><span>Name</span><input type="text" name="name" required autocomplete="name"></label>
-      <div class="two">
-        <label><span>Mobile</span><input type="tel" name="phone" required autocomplete="tel" placeholder="(561) 000-0000"></label>
-        <label><span>Zip</span><input type="text" name="zip" required autocomplete="postal-code" placeholder="34990"></label>
-      </div>
-      <label><span>What are we detailing</span>
-        <select name="vehicle_type"><option>Car or truck</option><option>Boat</option><option>RV or coach</option></select></label>
-      <label><span>Year, make, model and length if a boat</span><input type="text" name="vehicle" placeholder="2023 Macan, or 2019 Sea Ray 28 ft"></label>
-      <label><span>Service you are after</span>
-        <select name="service"><option>Not sure yet, need advice</option><option>Hand wash or detail</option>
-        <option>Paint correction</option><option>Ceramic coating</option><option>Paint protection film</option>
-        <option>Marine</option><option>RV or coach</option><option>Maintenance plan</option></select></label>
-      <label><span>Where is it kept</span><input type="text" name="location" placeholder="Street, marina or storage lot"></label>
-      <label><span>Preferred window</span>
-        <select name="window"><option>Weekday morning</option><option>Weekday afternoon</option><option>Saturday</option><option>Flexible, soonest available</option></select></label>
-      <label><span>Anything else</span><textarea name="notes" placeholder="Swirls from an automatic wash, salt spots, oxidation, tight parking..."></textarea></label>
-      <button class="cta" type="submit">Send request</button>
-    </form>
-    <p class="note"><b style="color:var(--gold-lt)">Then text photos.</b> Condition sets the price. One photo of the whole vehicle in daylight, one of the worst panel, one of the interior, and Nick can quote the same evening instead of scheduling a look first.</p>
-    <a class="sms" href="sms:+15612758846?&amp;body=Hi%20Nick%2C%20here%20are%20photos%20for%20my%20quote%3A">Text photos to (561) 275-8846</a>
-  </section>
 </div>
+
+<section id="build"><div class="w">
+  <div class="dhead"><span>What are we detailing?</span></div>
+  <div class="dbolt"><span class="ln"></span><svg viewBox="0 0 20 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="mb" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#F0DDA8"/><stop offset="100%" stop-color="#A2803A"/></linearGradient></defs><path d="M15,2 L4,22 L10,22 L3,46 L17,20 L10,20 Z" fill="url(#mb)"/></svg><span class="ln r"></span></div>
+  <div class="tiles">
+    <button class="vcard wide" data-v="car"><div class="art"><svg viewBox="0 0 200 104" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="tg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#F2E0AD"/><stop offset="45%" stop-color="#D3AE5C"/><stop offset="100%" stop-color="#A2803A"/></linearGradient></defs><path d="M22,92 A78,78 0 0 1 178,92" fill="none" stroke="url(#tg1)" stroke-width="1.6" opacity=".8"/><path d="M113,7 L95,38 L105,38 L91,60 L115,33 L105,33 Z" fill="url(#tg1)"/><g fill="none" stroke="url(#tg1)" stroke-linecap="round" stroke-linejoin="round"><path d="M108,96 L108,74 C108,71.5 109.5,70 112,70 L142,70 C145,70 147.5,71.5 149,74 L154,83 L182,83 C185,83 187,85 187,88 L187,96" stroke-width="1.5" opacity=".72"/><path d="M114,74 L133,74 L133,82 L114,82 Z" stroke-width="1.1" opacity=".5"/><path d="M154,83 L187,83" stroke-width="1.2" opacity=".5"/><path d="M132,96 a10,10 0 0 1 20,0 M164,96 a10,10 0 0 1 20,0" stroke-width="1.5" opacity=".72"/><path d="M12,96 C20,88 34,84 48,83 C56,72 70,67 82,68 C94,69 104,74 109,82 C117,83 124,88 126,96" stroke-width="1.9"/><path d="M55,83 C62,75 71,71 80,71.5 C88,72 95,75.5 100,81" stroke-width="1.25" opacity=".62"/><path d="M25,96 a11,11 0 0 1 22,0 M88,96 a11,11 0 0 1 22,0" stroke-width="1.9"/><path d="M12,96 L25,96 M47,96 L88,96 M110,96 L126,96" stroke-width="1.9"/></g></svg></div>
+      <span class="nm">Car &amp; Truck</span><div class="rule"></div>
+      <span class="fr">Washes from $75 &middot; Coatings from $1,095</span>
+      <span class="tapin">Tap to build yours</span></button>
+    <button class="vcard" data-v="boat"><div class="art"><svg viewBox="0 0 200 104" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="tg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#F2E0AD"/><stop offset="45%" stop-color="#D3AE5C"/><stop offset="100%" stop-color="#A2803A"/></linearGradient></defs><path d="M22,92 A78,78 0 0 1 178,92" fill="none" stroke="url(#tg2)" stroke-width="1.6" opacity=".8"/><path d="M113,7 L95,38 L105,38 L91,60 L115,33 L105,33 Z" fill="url(#tg2)"/><g fill="none" stroke="url(#tg2)" stroke-linecap="round" stroke-linejoin="round"><path d="M24,86 C34,76 52,70 74,69 L186,65 C182,79 166,86 148,86 Z" stroke-width="1.9"/><path d="M92,69 L92,54 L110,54 L110,68" stroke-width="1.45"/><path d="M80,50 L124,50 M88,50.5 L90,67 M116,50.5 L114,67" stroke-width="1.45"/><path d="M70,70 L78,57 L89,57" stroke-width="1.2" opacity=".68"/><path d="M120,68 C129,62 141,60 151,63" stroke-width="1.1" opacity=".5"/><path d="M14,94 C42,98 78,99 110,96.5 C142,94 168,95 192,97.5" stroke-width="1.3" opacity=".42"/></g></svg></div>
+      <span class="nm">Boat</span><div class="rule"></div>
+      <span class="fr">From $7/ft &middot; Ceramic from $78/ft</span>
+      <span class="tapin">Tap to build yours</span></button>
+    <button class="vcard" data-v="rv"><div class="art"><svg viewBox="0 0 200 104" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="tg3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#F2E0AD"/><stop offset="45%" stop-color="#D3AE5C"/><stop offset="100%" stop-color="#A2803A"/></linearGradient></defs><path d="M22,92 A78,78 0 0 1 178,92" fill="none" stroke="url(#tg3)" stroke-width="1.6" opacity=".8"/><path d="M113,7 L95,38 L105,38 L91,60 L115,33 L105,33 Z" fill="url(#tg3)"/><g fill="none" stroke="url(#tg3)" stroke-linecap="round" stroke-linejoin="round"><path d="M18,94 L18,64 C18,60 20.5,57 24,55.5 L42,48 C45,46.8 48,46 52,46 L172,46 C176,46 179,49 179,53 L179,94" stroke-width="1.9"/><path d="M18,94 L179,94" stroke-width="1.9"/><path d="M26,62 L44,52 L60,52 L60,66 L26,66 Z" stroke-width="1.2" opacity=".62"/><path d="M70,52 L94,52 L94,65 L70,65 Z M102,52 L126,52 L126,65 L102,65 Z M134,52 L158,52 L158,65 L134,65 Z" stroke-width="1.1" opacity=".52"/><path d="M64,68 L64,90" stroke-width="1.1" opacity=".45"/><path d="M76,73 L122,73 L122,84 L76,84 Z" stroke-width="1" opacity=".35"/><path d="M34,94 a10,10 0 0 1 20,0 M142,94 a10,10 0 0 1 20,0" stroke-width="1.9"/></g></svg></div>
+      <span class="nm">RV &amp; Coach</span><div class="rule"></div>
+      <span class="fr">From $12/ft &middot; Ceramic from $88/ft</span>
+      <span class="tapin">Tap to build yours</span></button>
+  </div>
+  <div class="ctas" style="margin-top:22px">
+    <button class="cta ghost" data-open="plans">Maintenance plans</button>
+    <button class="cta ghost" data-open="request">Your time to shine</button>
+  </div>
+</div></section>
 
 <footer><div class="w">
   <div class="ph"><a href="tel:+15612758846" style="color:inherit;text-decoration:none">(561) 275-8846</a></div>
@@ -217,61 +277,297 @@ footer a{color:var(--gold);text-decoration:none}
     Ceramic &middot; PPF &middot; Hand Wash &middot; Auto &middot; Marine &middot; RV</div>
 </div></footer>
 
+<div class="bar" id="bar"><div class="in">
+  <div><div class="lbl" id="barCount">0 selected</div><div class="tot" id="barTot">$0</div></div>
+  <div class="sp"></div>
+  <button class="cta" data-open="estimate">Review estimate</button>
+</div></div>
+
+<div class="ov" id="ov" role="dialog" aria-modal="true" aria-labelledby="ovTitle">
+  <div class="ovbox">
+    <div class="ovtop">
+      <button class="ovbtn" id="ovBack">&#8592; Back</button>
+      <div class="ovttl" id="ovTitle">&nbsp;</div>
+      <button class="ovbtn" id="ovReset">Reset</button>
+      <button class="ovx" id="ovX" aria-label="Close">&#10005;</button>
+    </div>
+    <div class="ovbody" id="ovBody"></div>
+    <div class="ovfoot" id="ovFoot">
+      <div><div class="lbl" id="ovCount">0 selected</div><div class="tot" id="ovTot">$0</div></div>
+      <span class="sp"></span>
+      <button class="cta" id="ovNext">Review estimate</button>
+    </div>
+  </div>
+</div>
+
 <script>
-var B=0, CAR=[
- ["Express Hand Wash","Foam pre-soak, two-bucket hand wash, wheels, tires, hand dry, jambs.",[75,95],""],
- ["Wash & Seal","Express wash plus spray sealant, about 3 months of protection.",[115,140],""],
- ["Interior Refresh","Full vacuum, wipe down, glass, mats, light leather conditioning.",[135,165],""],
- ["The Full Reset","Wash & Seal plus Interior Refresh.",[225,275],"Best value"],
- ["Quick Detail","Full Reset plus clay decontamination and hand wax.",[295,355],""],
- ["Gloss Enhancement","One-step machine polish. Removes light swirls, maximizes depth.",[495,595],""],
- ["Two-Stage Correction","Compound plus refine. Removes the majority of defects.",[925,1125],""],
- ["LUMEN &middot; 3 Year Ceramic","Full decon, clay, one-step enhancement, coating on paint, glass and wheel faces.",[1095,1295],""],
- ["MERIDIAN &middot; 5 Year Ceramic","Adds two-stage correction, wheels off and coated, trim and plastics.",[1995,2295],"Most chosen"],
- ["ZENITH &middot; 9 Year Ceramic","Adds multi-stage correction, calipers, interior coating, annual inspection.",[3450,3950],""],
- ["PPF &middot; Impact Package","Partial front. 18 in hood, partial fenders, mirrors, full bumper.",[1095,1095],""],
- ["PPF &middot; Full Front","Full hood, full fenders, mirrors, bumper, headlights.",[2195,2195],""]
-];
-var BOAT=[["Salt Rinse & Hand Wash",7,165],["Wash & Wax",24,460],["Compound & Seal",40,740],
- ["Marine Ceramic &middot; 2 Year",78,1550],["Marine Ceramic &middot; 5 Year",125,2600]];
-var RV=[["Exterior Hand Wash",12,350,""],["Wash & Wax",24,700,""],
- ["Oxidation Correction & Seal",42,900,". Condition dependent, confirmed after inspection"],
- ["RV Ceramic &middot; 5 Year",88,2600,""]];
-var RVADD=[["Roof clean & treat",9,225,"$9/ft, minimum $225",""],
- ["Awning clean",0,145,"Flat rate, any length",""],
- ["Coach interior detail",0,395,"Flat rate, condition dependent","from "]];
-function m(n){return "$"+n.toLocaleString("en-US");}
-function prices(){
-  document.getElementById("plist").innerHTML=CAR.map(function(r){
-    return '<div class="pr"><div class="l"><b>'+r[0]+(r[3]?'<span class="tag">'+r[3]+'</span>':'')+'</b><small>'+r[1]+'</small></div>'
-      +'<div class="p">from '+m(r[2][B])+'</div></div>';}).join("");
+var CAR={
+ wash:[
+  {id:'w1',n:'Express Hand Wash',d:'Foam pre-soak, two-bucket hand wash, wheel faces, tires dressed, hand dry, door jambs.',p:[75,95],m:'About 1 hour 15'},
+  {id:'w2',n:'Wash &amp; Seal',d:'Express wash plus spray sealant, roughly 3 months of protection, glass cleaned.',p:[115,140],m:'About 1 hour 45'},
+  {id:'w3',n:'Interior Refresh',d:'Full vacuum, wipe down, glass, mats, light leather conditioning.',p:[135,165],m:'About 2 hours'},
+  {id:'w4',n:'The Full Reset',d:'Wash &amp; Seal plus Interior Refresh, bundled.',p:[225,275],m:'About 3 hours 30',f:'Best value'},
+  {id:'w5',n:'Quick Detail',d:'Full Reset plus clay decontamination and hand-applied wax.',p:[295,355],m:'About 4 hours 30'}],
+ protect:[
+  {id:'p1',n:'Gloss Enhancement',d:'One-step machine polish. Removes light swirls, maximizes depth.',p:[495,595],m:'5 to 7 hours'},
+  {id:'p2',n:'Two-Stage Correction',d:'Compound plus refine. Removes the majority of defects.',p:[925,1125],m:'10 to 14 hours'},
+  {id:'p3',n:'LUMEN &middot; 3 Year Ceramic',d:'Full decontamination, clay, one-step enhancement, coating on paint, glass and wheel faces.',p:[1095,1295],m:'Manufacturer warranty, 3 yr'},
+  {id:'p4',n:'MERIDIAN &middot; 5 Year Ceramic',d:'Everything in LUMEN plus two-stage correction, wheels removed and coated, trim and plastics.',p:[1995,2295],m:'Manufacturer warranty, 5 yr',f:'Most chosen'},
+  {id:'p5',n:'ZENITH &middot; 9 Year Ceramic',d:'Everything in MERIDIAN plus multi-stage correction, calipers, interior coating, annual inspection.',p:[3450,3950],m:'Manufacturer warranty, 9 yr'},
+  {id:'p6',n:'PPF &middot; Impact Package',d:'Partial front. 18-inch hood, partial fenders, mirrors, full bumper.',p:[1095,1095],m:'Paint protection film'},
+  {id:'p7',n:'PPF &middot; Full Front',d:'Full hood, full fenders, mirrors, full bumper, headlights.',p:[2195,2195],m:'Paint protection film'}],
+ addons:[
+  {id:'a1',n:'Coastal salt &amp; iron decon',d:'Relevant on every vehicle that lives near the water.',p:[95,95]},
+  {id:'a2',n:'Engine bay',d:'Degrease, rinse, dress.',p:[85,85]},
+  {id:'a3',n:'Headlight restoration',d:'Pair, sanded and sealed.',p:[165,165]},
+  {id:'a4',n:'Ozone odor treatment',d:'Smoke, mildew, pets.',p:[125,125]},
+  {id:'a5',n:'Pet hair removal',d:'Light to moderate. Heavy quoted on site.',p:[45,45]}]};
+var BOAT={items:[
+  {id:'b1',n:'Salt Rinse &amp; Hand Wash',d:'Freshwater rinse, hand wash topsides and deck, chamois dry, isinglass rinsed.',pf:7,min:165},
+  {id:'b2',n:'Wash &amp; Wax',d:'Wash plus hand-applied marine wax on gelcoat, metal polish on visible hardware.',pf:24,min:460},
+  {id:'b3',n:'Compound &amp; Seal',d:'One-step oxidation removal on gelcoat, sealed. The Florida sun job.',pf:40,min:740},
+  {id:'b4',n:'Marine Ceramic &middot; 2 Year',d:'Decontamination, one-step correction, ceramic on gelcoat and hardware.',pf:78,min:1550},
+  {id:'b5',n:'Marine Ceramic &middot; 5 Year',d:'Multi-stage correction, ceramic on gelcoat, hardware, isinglass and non-skid.',pf:125,min:2600,f:'Best economics'}],
+ addons:[
+  {id:'ba1',n:'Non-skid deep clean &amp; seal',d:'Priced by deck area.',pf:9,min:180},
+  {id:'ba2',n:'Interior, vinyl &amp; upholstery',d:'Clean, protect, mildew treatment.',pf:14,min:280},
+  {id:'ba3',n:'Bilge &amp; engine bay',d:'Degrease and detail.',pf:0,min:225}],
+ unit:'Length overall',min:16,max:60,def:28};
+var RV={items:[
+  {id:'r1',n:'Exterior Hand Wash',d:'Hand wash, roof rinse, wheels and tires, black streak spot treatment.',pf:12,min:350},
+  {id:'r2',n:'Wash &amp; Wax',d:'Wash plus hand wax on gelcoat and fiberglass, decal-safe throughout.',pf:24,min:700},
+  {id:'r3',n:'Oxidation Correction &amp; Seal',d:'Machine compound to remove chalking, sealed. Confirmed after inspection.',pf:42,min:900},
+  {id:'r4',n:'RV Ceramic &middot; 5 Year',d:'Full decontamination, correction, ceramic on fiberglass, gelcoat and painted mask.',pf:88,min:2600,f:'Most chosen'}],
+ addons:[
+  {id:'ra1',n:'Roof clean &amp; treat',d:'EPDM or TPO, sealant-safe.',pf:9,min:225},
+  {id:'ra2',n:'Awning clean',d:'Both sides, mildew treatment.',pf:0,min:145},
+  {id:'ra3',n:'Coach interior detail',d:'Upholstery and cabinetry.',pf:0,min:395}],
+ unit:'Coach length',min:20,max:45,def:34};
+var PLANS=[
+  {n:'Bi-weekly',p:[135,165],d:'Two Express Hand Washes a month. The volume sweet spot for most households.',f:'Most chosen'},
+  {n:'Weekly',p:[239,289],d:'Four Express Hand Washes a month.'},
+  {n:'Monthly',p:[105,130],d:'One Wash &amp; Seal a month. Lowest-friction entry point.'},
+  {n:'Coating Care',p:[155,185],d:'Monthly maintenance wash on coated vehicles using coating-safe chemistry only. Required to keep the manufacturer warranty valid.'}];
+
+var VLABEL={car:'Car or truck',boat:'Boat',rv:'RV or coach'};
+var VNAME={car:'Car &amp; Truck',boat:'Boat',rv:'RV &amp; Coach'};
+var S={v:null,lane:null,body:null,feet:{boat:BOAT.def,rv:RV.def},sel:{}};
+var pane=null;
+var $=function(i){return document.getElementById(i);};
+function m(n){return '$'+n.toLocaleString('en-US');}
+function set(){return S.v==='car'?(S.lane?CAR[S.lane]:[]):(S.v==='boat'?BOAT.items:RV.items);}
+function adds(){return S.v==='car'?CAR.addons:(S.v==='boat'?BOAT.addons:RV.addons);}
+function all(){return CAR.wash.concat(CAR.protect,CAR.addons,BOAT.items,BOAT.addons,RV.items,RV.addons);}
+function price(it){
+  if(it.p) return it.p[S.body===null?0:S.body];
+  var f=S.feet[S.v]||S.feet.boat;
+  return it.pf?Math.max(it.pf*f,it.min):it.min;
 }
-function boat(){
-  var f=+document.getElementById("ft").value;
-  document.getElementById("ftv").textContent=f+" ft";
-  document.getElementById("blist").innerHTML=BOAT.map(function(r){
-    return '<div class="pr"><div class="l"><b>'+r[0]+'</b><small>$'+r[1]+'/ft, minimum '+m(r[2])+'</small></div>'
-      +'<div class="p">'+m(Math.max(r[1]*f,r[2]))+'</div></div>';}).join("");
-  var wax=Math.max(24*f,460)*3*2, cer=Math.max(125*f,2600), d=wax-cer;
-  document.getElementById("bmath").innerHTML='<b>Wax versus ceramic on a '+f+' footer.</b> Gelcoat here needs waxing about three times a year. Two years of that is '+m(wax)+'. The 5 year ceramic is '+m(cer)+' once.'
-    +'<span class="big">'+(d>0?'Coating is ahead by '+m(d)+' inside two years, then keeps paying for three more.':'At this length waxing stays cheaper for the first two years. Worth a conversation.')+'</span>';
+function selected(){var o=[];all().forEach(function(it){if(S.sel[it.id])o.push(it);});return o;}
+function total(){var t=0;selected().forEach(function(it){t+=price(it);});return t;}
+function baseChosen(){return set().some(function(it){return S.sel[it.id];});}
+function plain(s){return s.replace(/&middot;/g,'-').replace(/&amp;/g,'&');}
+function ctxLine(){
+  if(!S.v)return '';
+  var c=VLABEL[S.v];
+  if(S.v==='car'&&S.body!==null)c+=', '+(S.body===0?'Sedan':'SUV / Truck');
+  if(S.v!=='car')c+=', '+S.feet[S.v]+' ft';
+  return c;
 }
-document.querySelectorAll("[data-b]").forEach(function(b){b.addEventListener("click",function(){
-  document.querySelectorAll("[data-b]").forEach(function(x){x.classList.remove("on");});
-  b.classList.add("on"); B=+b.getAttribute("data-b"); prices();});});
-function rv(){
-  var f=+document.getElementById("rft").value;
-  document.getElementById("rftv").textContent=f+" ft";
-  document.getElementById("rlist").innerHTML=RV.map(function(r){
-    return '<div class="pr"><div class="l"><b>'+r[0]+'</b><small>$'+r[1]+'/ft, minimum '+m(r[2])+r[3]+'</small></div>'
-      +'<div class="p">'+m(Math.max(r[1]*f,r[2]))+'</div></div>';}).join("");
-  document.getElementById("ralist").innerHTML=RVADD.map(function(r){
-    return '<div class="pr"><div class="l"><b>'+r[0]+'</b><small>'+r[3]+'</small></div>'
-      +'<div class="p">'+r[4]+m(Math.max(r[1]*f,r[2]))+'</div></div>';}).join("");
+function estText(){
+  var L=selected();if(!L.length)return '';
+  return ctxLine()+' :: '+L.map(function(it){return plain(it.n)+' '+m(price(it));}).join(' | ')+' = '+m(total());
 }
-document.getElementById("ft").addEventListener("input",boat);
-document.getElementById("rft").addEventListener("input",rv);
-prices(); boat(); rv();
+function rowHTML(it){
+  var pr,sub;
+  if(it.p){pr=m(it.p[S.body===null?0:S.body]);sub='from';}
+  else if(it.pf){pr=m(price(it));sub='$'+it.pf+'/ft &middot; min '+m(it.min);}
+  else {pr=m(it.min);sub='flat';}
+  return '<div class="row'+(S.sel[it.id]?' sel':'')+'" data-t="'+it.id+'">'
+   +'<div class="chk">'+(S.sel[it.id]?'&#10003;':'')+'</div>'
+   +'<div class="body"><div class="rname">'+it.n+(it.f?'<span class="flag">'+it.f+'</span>':'')+'</div>'
+   +'<div class="rdesc">'+it.d+'</div>'+(it.m?'<div class="rmeta">'+it.m+'</div>':'')+'</div>'
+   +'<div class="rprice">'+pr+'<small>'+sub+'</small></div></div>';
+}
+function buildHTML(){
+  var isCar=S.v==='car', h='', C=isCar?null:(S.v==='boat'?BOAT:RV);
+  h+='<div class="step"><div class="slab"><span class="num">1</span><span class="tx">'
+    +(isCar?'Sedan or SUV / truck':C.unit)+'</span></div>';
+  if(isCar){
+    h+='<div class="seg"><button data-b="0" class="'+(S.body===0?'on':'')+'">Sedan</button>'
+      +'<button data-b="1" class="'+(S.body===1?'on':'')+'">SUV / Truck</button></div>';
+  } else {
+    var f=S.feet[S.v];
+    h+='<div class="lenbox"><div class="top"><span class="eyebrow">'+C.unit+'</span><span class="val">'+f+' ft</span></div>'
+      +'<input type="range" id="ft" min="'+C.min+'" max="'+C.max+'" value="'+f+'" aria-label="'+C.unit+'"></div>';
+  }
+  h+='</div>';
+  if(isCar){
+    h+='<div class="step'+(S.body===null?' hide':'')+'"><div class="slab"><span class="num">2</span><span class="tx">Type of service</span></div>'
+      +'<div class="seg"><button data-l="wash" class="'+(S.lane==='wash'?'on':'')+'">Wash &amp; Detail</button>'
+      +'<button data-l="protect" class="'+(S.lane==='protect'?'on':'')+'">Protection</button></div></div>';
+  }
+  var showSvc=!isCar||(S.body!==null&&S.lane);
+  h+='<div class="step'+(showSvc?'':' hide')+'"><div class="slab"><span class="num">'+(isCar?3:2)+'</span><span class="tx">'
+    +(isCar?'Choose your service':'Priced by the foot')+'</span><span class="hint">'
+    +(isCar?'Pick one, or more than one.':'Every price updates against its minimum.')+'</span></div>'
+    +(showSvc?set().map(rowHTML).join(''):'')+'</div>';
+  h+='<div class="step'+(showSvc&&baseChosen()?'':' hide')+'"><div class="slab"><span class="num">'+(isCar?4:3)
+    +'</span><span class="tx">Add-ons</span><span class="hint">Optional. Tap any to include.</span></div>'
+    +(showSvc?adds().map(rowHTML).join(''):'')+'</div>';
+  if(S.v==='boat'){
+    var bf=S.feet.boat, wax=Math.max(24*bf,460)*3*2, cer=Math.max(125*bf,2600), d=wax-cer;
+    h+='<div class="math"><b>Wax versus ceramic on a '+bf+' footer.</b> Gelcoat here needs waxing about three times a year. Two years of that is '+m(wax)+'. The 5 year ceramic is '+m(cer)+' once.'
+      +'<span class="big">'+(d>0?'Coating is ahead by '+m(d)+' inside two years, then keeps paying for three more.':'At this length waxing stays cheaper for the first two years. Worth a conversation.')+'</span></div>';
+  }
+  return h;
+}
+function estHTML(){
+  var L=selected();
+  if(!L.length)return '<h3>Your estimate</h3><p class="sublede">A starting figure from published pricing. Confirmed once Nick sees your photos.</p>'
+    +'<div class="empty">Nothing selected yet. Pick a vehicle from the home screen and build one.</div>';
+  return '<h3>Your estimate</h3><p class="sublede">'+ctxLine()+'. A starting figure from published pricing, confirmed once Nick sees your photos.</p>'
+    +L.map(function(it){
+      return '<div class="row sel" data-t="'+it.id+'"><div class="chk">&#10003;</div>'
+       +'<div class="body"><div class="rname">'+it.n+'</div><div class="rdesc">Tap to remove</div></div>'
+       +'<div class="rprice">'+m(price(it))+'</div></div>';}).join('')
+    +'<div class="math" style="margin-top:20px"><b>Total estimate '+m(total())+'</b><span class="big">This is an estimate, not a quote. Condition drives the final number, which is why we ask for three photos. Nothing is charged here.</span></div>';
+}
+function plansHTML(){
+  return '<h3>Maintenance plans</h3><p class="sublede">Priced sedan / SUV-truck. Cancel any month.</p>'
+   +PLANS.map(function(p){
+     return '<div class="planrow"><div class="t"><span class="nm">'+p.n+(p.f?'<span class="flag">'+p.f+'</span>':'')+'</span>'
+      +'<span class="pr">'+m(p.p[0])+' <small>/ '+m(p.p[1])+' mo</small></span></div><div class="d">'+p.d+'</div></div>';}).join('')
+   +'<div class="math">Coated vehicles need coating-safe maintenance to keep the manufacturer warranty valid. Washing a coated car with the wrong chemistry is the most common way owners void protection they paid for.</div>';
+}
+function requestHTML(){
+  var t=estText();
+  return '<h3>Your time to shine</h3><p class="sublede">Nick confirms every job by hand, usually the same day. Routes get built around drive time and weather, so there is no self-booking calendar.</p>'
+   +(t?'<div class="estsum"><b>Your estimate, included with this request</b>'+t+'</div>':'')
+   +'<form id="rf" action="https://formspree.io/f/mdenwrwd" method="POST">'
+   +'<input type="hidden" name="_subject" value="New request from palmcityhandwash.com">'
+   +'<input type="hidden" name="estimate" id="estField" value="'+t.replace(/"/g,'&quot;')+'">'
+   +'<label class="f"><span>Name</span><input type="text" name="name" required autocomplete="name"></label>'
+   +'<div class="two"><label class="f"><span>Mobile</span><input type="tel" name="phone" required autocomplete="tel" placeholder="(561) 000-0000"></label>'
+   +'<label class="f"><span>Zip</span><input type="text" name="zip" required autocomplete="postal-code" placeholder="34990"></label></div>'
+   +'<label class="f"><span>What are we detailing</span><select name="vehicle_type" id="vtField">'
+   +'<option>Car or truck</option><option>Boat</option><option>RV or coach</option></select></label>'
+   +'<label class="f"><span>Year, make, model and length if a boat</span><input type="text" name="vehicle" placeholder="2023 Macan, or 2019 Sea Ray 28 ft"></label>'
+   +'<label class="f"><span>Service you are after</span><select name="service">'
+   +'<option>Not sure yet, need advice</option><option>Hand wash or detail</option><option>Paint correction</option>'
+   +'<option>Ceramic coating</option><option>Paint protection film</option><option>Marine</option>'
+   +'<option>RV or coach</option><option>Maintenance plan</option></select></label>'
+   +'<label class="f"><span>Where is it kept</span><input type="text" name="location" placeholder="Street, marina or storage lot"></label>'
+   +'<label class="f"><span>Preferred window</span><select name="window">'
+   +'<option>Weekday morning</option><option>Weekday afternoon</option><option>Saturday</option><option>Flexible, soonest available</option></select></label>'
+   +'<label class="f"><span>Anything else</span><textarea name="notes" placeholder="Swirls from an automatic wash, salt spots, oxidation, tight parking..."></textarea></label>'
+   +'<button class="cta" type="submit">Send request</button></form>'
+   +'<p class="note"><b style="color:var(--gold-lt)">Then text photos.</b> Condition sets the price. One photo of the whole vehicle in daylight, one of the worst panel, one of the interior, and Nick can quote the same evening instead of scheduling a look first.</p>'
+   +'<a class="sms" href="sms:+15612758846?&amp;body=Hi%20Nick%2C%20here%20are%20photos%20for%20my%20quote%3A">Text photos to (561) 275-8846</a>';
+}
+function syncBar(){
+  var n=selected().length;
+  $('barCount').textContent=n+' selected';
+  $('barTot').textContent=m(total());
+  $('bar').className='bar'+(n&&!pane?' on':'');
+  document.body.classList.toggle('hasbar',!!n&&!pane);
+  document.querySelectorAll('.vcard').forEach(function(b){
+    b.classList.toggle('has',!!n&&b.getAttribute('data-v')===S.v);});
+}
+function renderPane(){
+  var n=selected().length;
+  if(pane==='build'){
+    $('ovTitle').innerHTML=VNAME[S.v];
+    $('ovBody').innerHTML=buildHTML();
+    $('ovReset').className='ovbtn';
+    $('ovFoot').className='ovfoot';
+    $('ovCount').textContent=n+' selected';
+    $('ovTot').textContent=m(total());
+    $('ovNext').textContent='Review estimate';
+    $('ovNext').disabled=!n;
+  } else if(pane==='estimate'){
+    $('ovTitle').innerHTML='Your estimate';
+    $('ovBody').innerHTML=estHTML();
+    $('ovReset').className='ovbtn'+(n?'':' hide');
+    $('ovFoot').className='ovfoot';
+    $('ovCount').textContent=n+' selected';
+    $('ovTot').textContent=m(total());
+    $('ovNext').textContent='Your time to shine';
+    $('ovNext').disabled=false;
+  } else if(pane==='plans'){
+    $('ovTitle').innerHTML='Maintenance plans';
+    $('ovBody').innerHTML=plansHTML();
+    $('ovReset').className='ovbtn hide';
+    $('ovFoot').className='ovfoot hide';
+  } else if(pane==='request'){
+    $('ovTitle').innerHTML='Your time to shine';
+    $('ovBody').innerHTML=requestHTML();
+    $('ovReset').className='ovbtn hide';
+    $('ovFoot').className='ovfoot hide';
+    if(S.v){var o=$('vtField').options,i;for(i=0;i<o.length;i++){if(o[i].text===VLABEL[S.v])$('vtField').selectedIndex=i;}}
+  }
+  syncBar();
+}
+function openPane(p){
+  pane=p;
+  $('ov').classList.add('on');
+  document.body.classList.add('lock');
+  renderPane();
+  $('ovBody').scrollTop=0;
+}
+function closeOv(){
+  pane=null;
+  $('ov').classList.remove('on');
+  document.body.classList.remove('lock');
+  syncBar();
+}
+function goBack(){
+  if(pane==='build')return closeOv();
+  if(pane==='estimate')return S.v?openPane('build'):closeOv();
+  if(pane==='request')return selected().length?openPane('estimate'):closeOv();
+  closeOv();
+}
+function openVehicle(v){
+  if(S.v!==v){S.sel={};S.v=v;S.body=null;S.lane=null;}
+  openPane('build');
+}
+function resetAll(){
+  S.sel={};S.body=null;S.lane=null;
+  if(S.v)S.feet[S.v]=(S.v==='boat'?BOAT.def:RV.def);
+  renderPane();
+}
+function closeMenu(){$('mnav').classList.remove('on');$('mbtn').classList.remove('on');$('mbtn').setAttribute('aria-expanded','false');}
+
+document.addEventListener('click',function(e){
+  var el;
+  if((el=e.target.closest('#mbtn'))){var op=!$('mnav').classList.contains('on');
+    $('mnav').classList.toggle('on',op);el.classList.toggle('on',op);el.setAttribute('aria-expanded',op?'true':'false');return;}
+  if($('mnav').classList.contains('on')&&!e.target.closest('#mnav'))closeMenu();
+  if(e.target.closest('#ovX')){closeOv();return;}
+  if(e.target.closest('#ovBack')){goBack();return;}
+  if(e.target.closest('#ovReset')){resetAll();return;}
+  if(e.target.closest('#ovNext')){pane==='build'?openPane('estimate'):openPane('request');return;}
+  if((el=e.target.closest('[data-open]'))){closeMenu();openPane(el.getAttribute('data-open'));return;}
+  if((el=e.target.closest('[data-v]'))){openVehicle(el.getAttribute('data-v'));return;}
+  if(e.target.closest('#ov')&&!e.target.closest('.ovbox')){closeOv();return;}
+  if((el=e.target.closest('[data-t]'))){var id=el.getAttribute('data-t');
+    if(S.sel[id])delete S.sel[id];else S.sel[id]=true;renderPane();return;}
+  if((el=e.target.closest('[data-b]'))){S.body=+el.getAttribute('data-b');renderPane();return;}
+  if((el=e.target.closest('[data-l]'))){S.lane=el.getAttribute('data-l');renderPane();return;}
+});
+document.addEventListener('input',function(e){
+  if(e.target&&e.target.id==='ft'){S.feet[S.v]=+e.target.value;renderPane();
+    var r=$('ovBody').querySelector('#ft');if(r)r.focus();}
+});
+document.addEventListener('keydown',function(e){
+  if(e.key!=='Escape')return;
+  if($('mnav').classList.contains('on'))return closeMenu();
+  if(pane)closeOv();
+});
+document.addEventListener('submit',function(e){
+  if(e.target&&e.target.id==='rf'){var f=$('estField');if(f)f.value=estText();}
+});
+syncBar();
 </script>
 </body>
 </html>
