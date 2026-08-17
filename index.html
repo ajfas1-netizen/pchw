@@ -14,6 +14,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#08182E">
 <link rel="icon" href="assets/icon-32.png" sizes="32x32">
+<link rel="icon" href="assets/icon-512.png" sizes="512x512">
 <link rel="apple-touch-icon" href="assets/icon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -144,7 +145,7 @@ footer a{color:var(--gold);text-decoration:none}
     <div class="vc">
       <a class="v" href="#prices"><div class="nm">Car &amp; Truck</div><div class="rule"></div><div class="fr">Washes from $75 &middot; Coatings from $1,095</div></a>
       <a class="v" href="#boat"><div class="nm">Boat</div><div class="rule"></div><div class="fr">From $7/ft &middot; Ceramic from $78/ft</div></a>
-      <a class="v" href="#prices"><div class="nm">RV &amp; Coach</div><div class="rule"></div><div class="fr">From $12/ft &middot; Ceramic from $88/ft</div></a>
+      <a class="v" href="#rv"><div class="nm">RV &amp; Coach</div><div class="rule"></div><div class="fr">From $12/ft &middot; Ceramic from $88/ft</div></a>
     </div>
   </section>
 
@@ -165,6 +166,18 @@ footer a{color:var(--gold);text-decoration:none}
       <input type="range" id="ft" min="16" max="60" value="28" aria-label="Boat length in feet">
       <div id="blist" style="margin-top:14px"></div>
       <div class="math" id="bmath"></div>
+    </div>
+  </section>
+
+  <section id="rv">
+    <h2>RV and coach pricing, live</h2>
+    <p class="sublede">Set your length. Every price is per foot against a minimum, and every number is a starting price confirmed after inspection.</p>
+    <div class="calc">
+      <div class="top"><span class="eyebrow">Length overall</span><span class="val" id="rftv">34 ft</span></div>
+      <input type="range" id="rft" min="20" max="45" value="34" aria-label="RV or coach length in feet">
+      <div id="rlist" style="margin-top:14px"></div>
+      <div class="eyebrow" style="margin-top:22px">Add-ons</div>
+      <div id="ralist" style="margin-top:6px"></div>
     </div>
   </section>
 
@@ -221,6 +234,12 @@ var B=0, CAR=[
 ];
 var BOAT=[["Salt Rinse & Hand Wash",7,165],["Wash & Wax",24,460],["Compound & Seal",40,740],
  ["Marine Ceramic &middot; 2 Year",78,1550],["Marine Ceramic &middot; 5 Year",125,2600]];
+var RV=[["Exterior Hand Wash",12,350,""],["Wash & Wax",24,700,""],
+ ["Oxidation Correction & Seal",42,900,". Condition dependent, confirmed after inspection"],
+ ["RV Ceramic &middot; 5 Year",88,2600,""]];
+var RVADD=[["Roof clean & treat",9,225,"$9/ft, minimum $225",""],
+ ["Awning clean",0,145,"Flat rate, any length",""],
+ ["Coach interior detail",0,395,"Flat rate, condition dependent","from "]];
 function m(n){return "$"+n.toLocaleString("en-US");}
 function prices(){
   document.getElementById("plist").innerHTML=CAR.map(function(r){
@@ -240,8 +259,19 @@ function boat(){
 document.querySelectorAll("[data-b]").forEach(function(b){b.addEventListener("click",function(){
   document.querySelectorAll("[data-b]").forEach(function(x){x.classList.remove("on");});
   b.classList.add("on"); B=+b.getAttribute("data-b"); prices();});});
+function rv(){
+  var f=+document.getElementById("rft").value;
+  document.getElementById("rftv").textContent=f+" ft";
+  document.getElementById("rlist").innerHTML=RV.map(function(r){
+    return '<div class="pr"><div class="l"><b>'+r[0]+'</b><small>$'+r[1]+'/ft, minimum '+m(r[2])+r[3]+'</small></div>'
+      +'<div class="p">'+m(Math.max(r[1]*f,r[2]))+'</div></div>';}).join("");
+  document.getElementById("ralist").innerHTML=RVADD.map(function(r){
+    return '<div class="pr"><div class="l"><b>'+r[0]+'</b><small>'+r[3]+'</small></div>'
+      +'<div class="p">'+r[4]+m(Math.max(r[1]*f,r[2]))+'</div></div>';}).join("");
+}
 document.getElementById("ft").addEventListener("input",boat);
-prices(); boat();
+document.getElementById("rft").addEventListener("input",rv);
+prices(); boat(); rv();
 </script>
 </body>
 </html>
