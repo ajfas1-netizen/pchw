@@ -219,28 +219,6 @@ textarea{min-height:90px;resize:vertical}
 .sms{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--hair);border-radius:var(--rs);padding:13px 17px;
  text-decoration:none;color:var(--gold);font-family:'Barlow Condensed',sans-serif;font-weight:600;letter-spacing:.14em;text-transform:uppercase;font-size:13.5px}
 .empty{color:var(--dim);font-size:14px;padding:14px 0}
-/* share block */
-.share{border:1px solid var(--gold);border-radius:var(--r);padding:16px;margin-top:26px;
- background:linear-gradient(145deg,rgba(197,162,83,.24) 0%,rgba(197,162,83,.09) 42%,rgba(8,24,46,.96) 100%)}
-.share .kick{font-family:'Barlow Condensed',sans-serif;font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold-lt)}
-.share h4{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(21px,4vw,27px);margin:4px 0 6px;color:#FBF6E7}
-.share p{font-size:13.5px;color:var(--dim);margin:0 0 13px;line-height:1.55}
-.share p b{color:var(--gold-lt)}
-.sbtns{display:flex;gap:8px;flex-wrap:wrap}
-.sbtn{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--hair);border-radius:var(--rs);
- background:rgba(8,24,46,.5);color:var(--gold-lt);text-decoration:none;cursor:pointer;padding:10px 13px;
- font-family:'Barlow Condensed',sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase}
-.sbtn:hover{border-color:var(--gold)}
-.sbtn svg{width:15px;height:15px;flex:0 0 auto;fill:currentColor}
-.sbtn.primary{background:var(--gold);border-color:var(--gold);color:var(--ink);font-weight:700;font-size:13px;padding:13px 18px;width:100%;justify-content:center}
-.sbtn.primary svg{width:17px;height:17px}
-.sbtn.primary:hover{background:var(--gold-lt);border-color:var(--gold-lt)}
-.sor{display:block;font-family:'Barlow Condensed',sans-serif;font-size:10.5px;letter-spacing:.22em;
- text-transform:uppercase;color:var(--dim);margin:13px 0 9px}
-.shared{margin-top:12px;border-left:2px solid var(--gold);background:rgba(197,162,83,.1);padding:11px 14px;
- border-radius:0 var(--rs) var(--rs) 0;font-size:13.5px;color:var(--gold-lt)}
-.estsum{background:#0A1B31;border:1px solid var(--hair);border-radius:var(--rs);padding:12px 14px;margin:0 0 16px;font-size:13.5px;color:var(--dim)}
-.estsum b{color:var(--gold-lt);display:block;font-family:'Barlow Condensed',sans-serif;letter-spacing:.14em;text-transform:uppercase;font-size:11px;margin-bottom:4px}
 footer{border-top:1px solid rgba(197,162,83,.2);padding:30px 0 44px;color:var(--dim);font-size:13.5px;text-align:center}
 footer .ph{font-size:26px;font-weight:700;color:var(--bone);letter-spacing:.02em;margin-bottom:6px}
 footer a{color:var(--gold);text-decoration:none}
@@ -395,7 +373,7 @@ var PLANS=[
 
 var VLABEL={car:'Car or truck',boat:'Boat',rv:'RV or coach'};
 var VNAME={car:'Car &amp; Truck',boat:'Boat',rv:'RV &amp; Coach'};
-var S={v:null,lane:null,body:null,step:0,plan:null,shared:null,feet:{boat:BOAT.def,rv:RV.def},sel:{}};
+var S={v:null,lane:null,body:null,step:0,plan:null,feet:{boat:BOAT.def,rv:RV.def},sel:{}};
 var pane=null;
 var $=function(i){return document.getElementById(i);};
 function m(n){return '$'+n.toLocaleString('en-US');}
@@ -426,7 +404,6 @@ function estText(){
   if(!L.length&&!S.plan)return '';
   if(L.length)parts.push(L.map(function(it){return plain(it.n)+' '+m(price(it));}).join(' | ')+' = '+m(total())+' one time');
   if(S.plan)parts.push(planText());
-  if(S.shared)parts.push('10% SHARE DISCOUNT CLAIMED (via '+S.shared+')');
   return (ctxLine()?ctxLine()+' :: ':'')+parts.join(' + ');
 }
 function planRowHTML(p){
@@ -533,42 +510,7 @@ function estHTML(){
      +'<div class="rprice">'+m(planPrice(p))+'<small>per month</small></div></div>'
      +'<div class="math" style="margin-top:16px"><b>Plus '+m(planPrice(p))+' a month</b><span class="big">Billed monthly and separate from the one-time total above. Cancel any month.</span></div>';
   }
-  h+=shareHTML();
   return h;
-}
-var SHARE_URL='https://palmcityhandwash.com/';
-var SHARE_TXT='I just built a detailing quote in about a minute with Striking Details in Palm City. Ceramic, PPF and hand wash for cars, boats and RVs, with real prices on the site.';
-function shareHTML(){
-  var t=total(), off=Math.round(t*0.1);
-  var u=encodeURIComponent(SHARE_URL), x=encodeURIComponent(SHARE_TXT);
-  var ic={
-    fb:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 22v-8h2.7l.4-3.1h-3.1V8.9c0-.9.25-1.5 1.55-1.5H16.7V4.6c-.29-.04-1.27-.13-2.42-.13-2.39 0-4.03 1.46-4.03 4.15v2.28H7.5V14h2.75v8z"/></svg>',
-    x:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.5 3h3l-6.6 7.5L21.8 21h-5.9l-4.3-5.6L6.6 21H3.5l7-8L2.6 3h6l3.9 5.2zm-1.1 16.1h1.7L7.7 4.8H5.9z"/></svg>',
-    wa:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a9.9 9.9 0 0 0-8.5 15l-1.3 4.7 4.8-1.3A9.9 9.9 0 1 0 12 2m0 1.8a8.1 8.1 0 1 1-4.1 15.1l-.3-.2-2.9.8.8-2.8-.2-.3A8.1 8.1 0 0 1 12 3.8m-3.1 4c-.15 0-.4.06-.6.3s-.8.78-.8 1.9.82 2.2.93 2.35c.12.15 1.6 2.55 3.95 3.47 1.95.77 2.35.62 2.77.58.42-.04 1.36-.55 1.55-1.1.2-.53.2-1 .14-1.09-.06-.1-.22-.15-.46-.27s-1.36-.67-1.57-.75c-.2-.08-.36-.11-.51.12s-.58.74-.71.89c-.13.15-.26.17-.5.06a6.4 6.4 0 0 1-1.87-1.15 7 7 0 0 1-1.29-1.6c-.14-.24 0-.36.1-.48.11-.11.24-.28.36-.42.11-.15.15-.25.23-.41.08-.16.04-.3-.02-.42s-.51-1.25-.71-1.71c-.18-.44-.37-.38-.51-.39z"/></svg>',
-    mail:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1m1.4 2L12 12.3 19.6 7zM20 17V8.5l-7.4 5.2a1 1 0 0 1-1.2 0L4 8.5V17z"/></svg>',
-    link:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10.6 13.4a1 1 0 0 1 0-1.4l1.4-1.4a1 1 0 0 1 1.4 1.4l-1.4 1.4a1 1 0 0 1-1.4 0m-2.1 4.2a4 4 0 0 1 0-5.7l2.1-2.1 1.4 1.4-2.1 2.1a2 2 0 0 0 2.8 2.8l2.1-2.1 1.4 1.4-2.1 2.1a4 4 0 0 1-5.6 0m7-7.1-1.4-1.4 2.1-2.1a2 2 0 1 1 2.8 2.8l-2.1 2.1-1.4-1.4 2.1-2.1a.4.4 0 0 0-.6-.6z"/></svg>'};
-  ic.up='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l4.5 4.5-1.4 1.4L13 6.8V16h-2V6.8L8.9 8.9 7.5 7.5zM5 14v5h14v-5h2v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-6z"/></svg>';
-  ic.sms='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c5 0 9 3.3 9 7.4s-4 7.4-9 7.4a11 11 0 0 1-2.4-.26L5 20.5l.9-3.6A7.9 7.9 0 0 1 3 10.4C3 6.3 7 3 12 3"/></svg>';
-  var native=(typeof navigator!=='undefined'&&navigator.share)
-    ? '<button class="sbtn primary" id="nativeShare" data-share="phone share sheet">'+ic.up+'Share the post</button>'
-      +'<span class="sor">or pick an app</span>'
-    : '';
-  return '<div class="share"><div class="kick">Spread the word</div>'
-   +'<h4>Share it, save 10 percent</h4>'
-   +'<p>Post this to your social and Nick takes <b>10% off'+(t?', about '+m(off)+' on this estimate':'')+'</b>. '
-   +'The post is already written for you. Tap share, then mention it when Nick confirms your appointment. Your request will note that you shared.</p>'
-   +native
-   +'<div class="sbtns">'
-   +'<a class="sbtn" data-share="Facebook" target="_blank" rel="noopener" href="https://www.facebook.com/sharer/sharer.php?u='+u+'">'+ic.fb+'Facebook</a>'
-   +'<a class="sbtn" data-share="X" target="_blank" rel="noopener" href="https://twitter.com/intent/tweet?url='+u+'&amp;text='+x+'">'+ic.x+'X</a>'
-   +'<a class="sbtn" data-share="WhatsApp" target="_blank" rel="noopener" href="https://wa.me/?text='+encodeURIComponent(SHARE_TXT+' '+SHARE_URL)+'">'+ic.wa+'WhatsApp</a>'
-   +'<a class="sbtn" data-share="Text message" href="sms:?&amp;body='+encodeURIComponent(SHARE_TXT+' '+SHARE_URL)+'">'+ic.sms+'Text</a>'
-   +'<a class="sbtn" data-share="Email" href="mailto:?subject='+encodeURIComponent('Striking Details, Palm City')+'&amp;body='+encodeURIComponent(SHARE_TXT+'\n\n'+SHARE_URL)+'">'+ic.mail+'Email</a>'
-   +'<button class="sbtn" id="copyLink" data-share="Copied link">'+ic.link+'<span id="copyTx">Copy link</span></button>'
-   +'</div>'
-   +(S.shared?'<div class="shared">'+(S.shared==='Copied link'||S.shared==='phone share sheet'?'Thanks for spreading the word.':'Thanks for sharing on '+S.shared+'.')
-     +' Your 10% is noted on this request, just remind Nick when he confirms.</div>':'')
-   +'</div>';
 }
 function plansHTML(){
   return '<h3>Keep it striking</h3><p class="sublede">Priced sedan / SUV-truck. Tap one to add it to your estimate. Cancel any month.</p>'
@@ -685,7 +627,7 @@ function openVehicle(v){
   openPane('build');
 }
 function resetAll(){
-  S.sel={};S.body=null;S.lane=null;S.step=0;S.plan=null;S.shared=null;
+  S.sel={};S.body=null;S.lane=null;S.step=0;S.plan=null;
   if(S.v)S.feet[S.v]=(S.v==='boat'?BOAT.def:RV.def);
   renderPane();
 }
@@ -710,21 +652,6 @@ document.addEventListener('click',function(e){
   if(e.target.closest('#ov')&&!e.target.closest('.ovbox')){closeOv();return;}
   if((el=e.target.closest('[data-step]'))){var si=+el.getAttribute('data-step');
     if(stepOK(si)){S.step=si;renderPane();$('ovBody').scrollTop=0;}return;}
-  if((el=e.target.closest('[data-share]'))){
-    var how=el.getAttribute('data-share');
-    if(el.id==='nativeShare'){
-      e.preventDefault();
-      navigator.share({title:'Striking Details, Palm City',text:SHARE_TXT,url:SHARE_URL})
-        .then(function(){S.shared='phone share sheet';if(pane==='estimate')renderPane();})
-        .catch(function(){});
-      return;}
-    if(el.id==='copyLink'){
-      if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(SHARE_URL);
-      var tx=$('copyTx');if(tx)tx.textContent='Link copied';
-    }
-    S.shared=how;
-    setTimeout(function(){if(pane==='estimate')renderPane();},400);
-    return;}
   if((el=e.target.closest('[data-p]'))){e.preventDefault();
     var pid=el.getAttribute('data-p');S.plan=(S.plan===pid?null:pid);renderPane();return;}
   if((el=e.target.closest('[data-t]'))){var id=el.getAttribute('data-t');
